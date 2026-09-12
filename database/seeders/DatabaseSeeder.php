@@ -22,15 +22,16 @@ class DatabaseSeeder extends Seeder
         $jabatanManager = Jabatan::where('jabatan', 'Manager')->first();
         $jabatanStaff = Jabatan::where('jabatan', 'Staff')->first();
 
-        // 2. Data Lokasi Presensi Default
-        $lokasi = LokasiPresensi::firstOrCreate(
-            ['nama_lokasi' => 'Kantor Pusat'],
+        // 2. Data Lokasi Presensi Default (Kantor Tunas Media)
+        $lokasi = LokasiPresensi::updateOrCreate(
+            ['id' => 1],
             [
-                'alamat_lokasi' => 'Jl. Jenderal Sudirman No. 1, Jakarta Pusat',
+                'nama_lokasi' => 'Kantor Tunas Media',
+                'alamat_lokasi' => 'Jalan Raya Cinangka No.88, Kelurahan Kedaung, Kecamatan Sawangan, Kota Depok',
                 'tipe_lokasi' => 'Pusat',
-                'latitude' => '-6.2088',
-                'longitude' => '106.8456',
-                'radius' => 100, // 100 meter
+                'latitude' => '-6.370839',
+                'longitude' => '106.746012',
+                'radius' => 100,
                 'zona_waktu' => 'WIB',
                 'jam_masuk' => '08:00:00',
                 'jam_pulang' => '17:00:00',
