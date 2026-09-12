@@ -22,19 +22,34 @@ class DatabaseSeeder extends Seeder
         $jabatanManager = Jabatan::where('jabatan', 'Manager')->first();
         $jabatanStaff = Jabatan::where('jabatan', 'Staff')->first();
 
-        // 2. Data Lokasi Presensi Default (Kantor Tunas Media)
-        $lokasi = LokasiPresensi::updateOrCreate(
+        // 2. Data Lokasi Presensi (Kantor 1 & Kantor 2)
+        $lokasi1 = LokasiPresensi::updateOrCreate(
             ['id' => 1],
             [
-                'nama_lokasi' => 'Kantor Tunas Media',
+                'nama_lokasi' => 'Kantor 1',
                 'alamat_lokasi' => 'Jalan Raya Cinangka No.88, Kelurahan Kedaung, Kecamatan Sawangan, Kota Depok',
-                'tipe_lokasi' => 'Pusat',
+                'tipe_lokasi' => 'TI',
                 'latitude' => '-6.370839',
                 'longitude' => '106.746012',
-                'radius' => 100,
+                'radius' => 300,
                 'zona_waktu' => 'WIB',
-                'jam_masuk' => '08:00:00',
-                'jam_pulang' => '17:00:00',
+                'jam_masuk' => '07:30:00',
+                'jam_pulang' => '14:00:00',
+            ]
+        );
+
+        $lokasi2 = LokasiPresensi::updateOrCreate(
+            ['id' => 2],
+            [
+                'nama_lokasi' => 'Kantor 2',
+                'alamat_lokasi' => 'JQP4+6JQ Cinangka, Kota Depok, Jawa Barat',
+                'tipe_lokasi' => 'Perumahan',
+                'latitude' => '-6.364722',
+                'longitude' => '106.756638',
+                'radius' => 500,
+                'zona_waktu' => 'WIB',
+                'jam_masuk' => '20:55:00',
+                'jam_pulang' => '23:00:00',
             ]
         );
 
@@ -47,7 +62,7 @@ class DatabaseSeeder extends Seeder
                 'alamat' => 'Jl. Admin Utama No. 1',
                 'no_handphone' => '081234567890',
                 'jabatan_id' => $jabatanManager?->id,
-                'lokasi_presensi_id' => $lokasi->id,
+                'lokasi_presensi_id' => $lokasi1->id,
             ]
         );
 
@@ -70,7 +85,7 @@ class DatabaseSeeder extends Seeder
                 'alamat' => 'Jl. Pegawai No. 1',
                 'no_handphone' => '089876543210',
                 'jabatan_id' => $jabatanStaff?->id,
-                'lokasi_presensi_id' => $lokasi->id,
+                'lokasi_presensi_id' => $lokasi1->id,
             ]
         );
 
