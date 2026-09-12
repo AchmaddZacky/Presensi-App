@@ -12,7 +12,7 @@ class JabatanSeeder extends Seeder
         $data = ['Manager', 'Staff', 'Supervisor', 'Kepala Bagian'];
 
         foreach ($data as $jabatan) {
-            Jabatan::create(['jabatan' => $jabatan]);
+            Jabatan::firstOrCreate(['jabatan' => $jabatan]);
         }
     }
 }
