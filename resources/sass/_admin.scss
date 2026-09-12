@@ -1,0 +1,6 @@
+.sidebar {
+    a.nav-link {
+        padding: 0.5rem 0;
+        &:hover { opacity: 0.8; }
+    }
+}

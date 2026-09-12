@@ -1,0 +1,243 @@
+/* Premium Bright Design System */
+
+:root {
+  --app-bg: #f8fafc;
+  --app-surface: #ffffff;
+  --app-surface-light: #f1f5f9;
+  --app-text: #1e293b;
+  --app-text-dim: #64748b;
+  --app-accent: #2563eb; /* Royal Blue */
+  --app-accent-hover: #1d4ed8;
+  --app-accent-light: #eff6ff;
+  --app-border: #e2e8f0;
+  --app-danger: #ef4444;
+  --app-success: #10b981;
+  --app-font-display: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --app-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --soft-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  background-color: var(--app-bg) !important;
+  color: var(--app-text) !important;
+  font-family: var(--app-font-sans) !important;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--app-font-display);
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.text-accent { color: var(--app-accent) !important; }
+.text-dim { color: var(--app-text-dim) !important; }
+.font-mono { font-family: var(--app-font-display) !important; font-weight: 500; letter-spacing: normal; }
+
+/* Premium Card */
+.swiss-card {
+  background: var(--app-surface);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--soft-shadow);
+  border-radius: 16px;
+  position: relative;
+
+  @media (min-width: 768px) {
+    padding: 2.25rem;
+  }
+}
+
+.swiss-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--hover-shadow);
+}
+
+/* Buttons */
+.btn-swiss {
+  background: var(--app-accent);
+  color: #ffffff;
+  border: none;
+  font-family: var(--app-font-sans);
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn-swiss:hover {
+  background: var(--app-accent-hover);
+  color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-swiss-danger {
+  background: transparent;
+  color: var(--app-danger);
+  border: 1px solid var(--app-danger);
+  font-family: var(--app-font-sans);
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn-swiss-danger:hover {
+  background: #fef2f2;
+}
+
+/* Forms */
+.form-control-swiss {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  color: var(--app-text);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-family: var(--app-font-sans);
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.form-control-swiss:focus {
+  background: var(--app-surface);
+  border-color: var(--app-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+}
+
+.form-label-swiss {
+  font-family: var(--app-font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--app-text);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Widget Digital Clock */
+.digital-clock-widget {
+  font-family: var(--app-font-display);
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  font-weight: 700;
+  color: var(--app-accent);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+/* Overrides for Bootstrap */
+.navbar-swiss {
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--app-border);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.navbar-swiss .navbar-brand {
+  font-family: var(--app-font-display);
+  font-weight: 600;
+  color: var(--app-text) !important;
+}
+
+.navbar-swiss .nav-link {
+  color: var(--app-text-dim) !important;
+  font-family: var(--app-font-sans);
+  font-weight: 500;
+}
+.navbar-swiss .nav-link:hover, .navbar-swiss .nav-link.active {
+  color: var(--app-accent) !important;
+}
+
+/* Mobile First & Responsive Navigation Utilities */
+@media (min-width: 992px) {
+  .sidebar {
+    width: 280px !important;
+    min-width: 280px !important;
+    background: var(--app-surface);
+    border-right: 1px solid var(--app-border);
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .sidebar.offcanvas-lg {
+    max-width: 285px;
+    width: 85%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    background: #ffffff;
+  }
+}
+
+/* Mobile Bottom Navigation for Pegawai */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 62px;
+  background: #ffffff;
+  border-top: 1px solid var(--app-border);
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+  z-index: 1030;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 0.5rem;
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--app-text-dim);
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 500;
+    flex: 1;
+    height: 100%;
+    transition: color 0.15s ease-in-out;
+
+    i {
+      font-size: 1.25rem;
+      margin-bottom: 2px;
+    }
+
+    &.active, &:hover {
+      color: var(--app-accent);
+    }
+  }
+}
+
+/* Responsive Table container smoothly scrollable */
+.table-responsive {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: thin;
+  touch-action: pan-x pan-y;
+  max-width: 100%;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+    &:hover {
+      background: #94a3b8;
+    }
+  }
+}
+
