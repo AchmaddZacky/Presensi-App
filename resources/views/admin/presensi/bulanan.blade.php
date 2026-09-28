@@ -3,9 +3,14 @@
 @section('admin-content')
 <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-3">
     <h4 class="m-0 fw-bold font-mono" style="font-size: clamp(1.2rem, 4vw, 1.5rem);">Rekap Presensi Bulanan</h4>
-    <a href="{{ route('admin.presensi.export', array_merge(request()->query(), ['mode' => 'bulanan'])) }}" class="btn btn-outline-danger btn-sm w-100 w-sm-auto text-center">
-        <i class="bi bi-file-earmark-pdf me-1"></i> Export PDF
-    </a>
+    <div class="d-flex gap-2 w-100 w-sm-auto">
+        <a href="{{ route('admin.presensi.export-csv', array_merge(request()->query(), ['mode' => 'bulanan'])) }}" class="btn btn-outline-success btn-sm flex-fill flex-sm-grow-0 text-center">
+            <i class="bi bi-file-earmark-spreadsheet me-1"></i> Export CSV
+        </a>
+        <a href="{{ route('admin.presensi.export', array_merge(request()->query(), ['mode' => 'bulanan'])) }}" class="btn btn-outline-danger btn-sm flex-fill flex-sm-grow-0 text-center">
+            <i class="bi bi-file-earmark-pdf me-1"></i> Export PDF
+        </a>
+    </div>
 </div>
 
 <form class="row g-2 align-items-center mb-3" method="GET" action="{{ route('admin.presensi.bulanan') }}">
@@ -86,7 +91,6 @@
                     <td class="text-center" style="white-space: nowrap;">
                         @if($item->foto_masuk)
                             <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2" style="font-size: 0.8rem;" 
-                                    data-bs-toggle="modal" data-bs-target="#photoModal" 
                                     onclick="showPhoto('{{ asset('storage/'.$item->foto_masuk) }}', 'Foto Masuk - {{ $item->pegawai->nama ?? '' }} ({{ $item->jam_masuk }})')">
                                 <i class="bi bi-image me-1"></i> Lihat Foto
                             </button>
@@ -99,7 +103,6 @@
                     <td class="text-center" style="white-space: nowrap;">
                         @if($item->foto_keluar)
                             <button type="button" class="btn btn-sm btn-outline-warning text-dark py-0 px-2" style="font-size: 0.8rem;" 
-                                    data-bs-toggle="modal" data-bs-target="#photoModal" 
                                     onclick="showPhoto('{{ asset('storage/'.$item->foto_keluar) }}', 'Foto Pulang - {{ $item->pegawai->nama ?? '' }} ({{ $item->jam_keluar }})')">
                                 <i class="bi bi-image me-1"></i> Lihat Foto
                             </button>
@@ -119,32 +122,20 @@
     </div>
 </div>
 
-<!-- Photo Preview Modal -->
-<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow" style="border-radius: 12px;">
-            <div class="modal-header border-0 pb-0">
-                <h6 class="modal-title fw-bold text-dark" id="photoModalLabel">Preview Foto Presensi</h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center p-3">
-                <img id="modalPhotoImage" src="" alt="Foto Presensi" loading="lazy" decoding="async" class="img-fluid rounded border" style="max-height: 420px; width: 100%; object-fit: contain;">
-            </div>
-            <div class="modal-footer border-0 pt-0 justify-content-between">
-                <a id="modalPhotoLink" href="" target="_blank" class="btn btn-sm btn-link text-decoration-none">
-                    <i class="bi bi-box-arrow-up-right me-1"></i> Buka Gambar di Tab Baru
-                </a>
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     function showPhoto(url, title) {
-        document.getElementById('modalPhotoImage').src = url;
-        document.getElementById('photoModalLabel').innerText = title;
-        document.getElementById('modalPhotoLink').href = url;
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: title,
+                imageUrl: url,
+                imageAlt: title,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Tutup',
+                footer: '<a href="' + url + '" target="_blank">Buka gambar di tab baru</a>'
+            });
+        } else {
+            window.open(url, '_blank');
+        }
     }
 </script>
 @endsection

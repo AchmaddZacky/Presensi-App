@@ -7,10 +7,12 @@ use App\Http\Controllers\Admin\LaporanExportController;
 use App\Http\Controllers\Admin\LokasiPresensiController;
 use App\Http\Controllers\Admin\PegawaiController;
 use App\Http\Controllers\Admin\PresensiController as AdminPresensiController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Pegawai\DashboardController as PegawaiDashboardController;
 use App\Http\Controllers\Pegawai\KetidakhadiranController as PegawaiKetidakhadiranController;
 use App\Http\Controllers\Pegawai\PresensiController as PegawaiPresensiController;
+use App\Http\Controllers\Pegawai\ProfileController as PegawaiProfileController;
 use App\Http\Controllers\Pegawai\RiwayatController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,10 +34,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::patch('ketidakhadiran/{ketidakhadiran}/approve', [AdminKetidakhadiranController::class, 'approve'])->name('ketidakhadiran.approve');
     Route::patch('ketidakhadiran/{ketidakhadiran}/reject', [AdminKetidakhadiranController::class, 'reject'])->name('ketidakhadiran.reject');
 
+    Route::get('presensi/harian', [AdminPresensiController::class, 'harian'])->name('presensi.harian');
     Route::get('presensi/mingguan', [AdminPresensiController::class, 'mingguan'])->name('presensi.mingguan');
     Route::get('presensi/bulanan', [AdminPresensiController::class, 'bulanan'])->name('presensi.bulanan');
     Route::get('presensi', [AdminPresensiController::class, 'index'])->name('presensi.index');
     Route::get('presensi/export', [LaporanExportController::class, 'exportPdf'])->name('presensi.export');
+    Route::get('presensi/export-csv', [LaporanExportController::class, 'exportCsv'])->name('presensi.export-csv');
+
+    Route::get('profile', [AdminProfileController::class, 'index'])->name('profile.index');
+    Route::put('profile', [AdminProfileController::class, 'update'])->name('profile.update');
 });
 
 // ===================== PEGAWAI =====================
@@ -54,6 +61,9 @@ Route::prefix('pegawai')->name('pegawai.')->middleware(['auth', 'pegawai'])->gro
     Route::get('ketidakhadiran/{ketidakhadiran}/download', [PegawaiKetidakhadiranController::class, 'download'])->name('ketidakhadiran.download');
 
     Route::get('riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+
+    Route::get('profile', [PegawaiProfileController::class, 'index'])->name('profile.index');
+    Route::put('profile', [PegawaiProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::get('/', function () {

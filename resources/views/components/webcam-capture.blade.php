@@ -198,12 +198,32 @@ document.addEventListener("DOMContentLoaded", function() {
         form.addEventListener('submit', function(e) {
             if (!inputFoto.value) {
                 e.preventDefault();
-                alert("Silakan ambil foto selfie terlebih dahulu.");
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Perhatian',
+                        text: 'Silakan ambil foto selfie terlebih dahulu sebelum menyimpan presensi.',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#3085d6'
+                    });
+                } else {
+                    alert("Silakan ambil foto selfie terlebih dahulu.");
+                }
                 return;
             }
             if (!latInput.value || !lngInput.value) {
                 e.preventDefault();
-                alert("Menunggu lokasi GPS... Pastikan izin lokasi (location) pada browser Anda telah diaktifkan.");
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Perhatian',
+                        text: 'Menunggu lokasi GPS... Pastikan izin lokasi (location) pada browser Anda telah diaktifkan.',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#3085d6'
+                    });
+                } else {
+                    alert("Menunggu lokasi GPS... Pastikan izin lokasi (location) pada browser Anda telah diaktifkan.");
+                }
                 return;
             }
             // Release camera hardware immediately

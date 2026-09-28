@@ -26,12 +26,38 @@
                 <span id="admin-live-clock-mobile" class="fw-semibold tabular-nums" style="display: inline-block; min-width: 54px; text-align: center;">{{ now()->format('H:i:s') }}</span>
             </div>
             @if(Auth::check())
-            <img src="{{ (Auth::user()->pegawai && Auth::user()->pegawai->foto) ? asset('storage/'.Auth::user()->pegawai->foto) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->pegawai->nama ?? Auth::user()->username).'&background=2563eb&color=fff' }}" 
-                 alt="Profile" 
-                 width="32"
-                 height="32"
-                 class="rounded-circle avatar-img-sm" 
-                 style="width: 32px; height: 32px; min-width: 32px; object-fit: cover; border: 2px solid var(--app-border);">
+            <div class="dropdown">
+                <button class="btn btn-link p-0 border-0 text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Menu Profil">
+                    <img src="{{ (Auth::user()->pegawai && Auth::user()->pegawai->foto) ? asset('storage/'.Auth::user()->pegawai->foto) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->pegawai->nama ?? Auth::user()->username).'&background=2563eb&color=fff' }}" 
+                         alt="Profile" 
+                         width="32"
+                         height="32"
+                         class="rounded-circle avatar-img-sm" 
+                         style="width: 32px; height: 32px; min-width: 32px; object-fit: cover; border: 2px solid var(--app-border);">
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border mt-1" style="border-radius: 12px; min-width: 200px;">
+                    <li class="px-3 py-2 border-bottom bg-light">
+                        <div class="fw-bold small text-dark">{{ Auth::user()->pegawai->nama ?? Auth::user()->username }}</div>
+                        <div class="text-muted" style="font-size: 0.72rem;">{{ '@' . Auth::user()->username }} &bull; Admin</div>
+                    </li>
+                    <li>
+                        <a class="dropdown-item py-2 d-flex align-items-center gap-2 {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" href="{{ route('admin.profile.index') }}">
+                            <i class="bi bi-person-gear text-primary"></i>
+                            <span>Pengaturan Profil</span>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider my-1"></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item py-2 text-danger d-flex align-items-center gap-2">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Logout</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
             @endif
         </div>
     </header>
@@ -54,7 +80,7 @@
         </div>
         
         <ul class="nav flex-column" style="font-size: 1rem; font-weight: 500;">
-            <li class="nav-item mb-2"><a class="nav-link text-dim hover-accent" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            <li class="nav-item mb-2"><a class="nav-link text-dim hover-accent {{ request()->routeIs('admin.dashboard') ? 'active-submenu' : '' }}" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             
             <li class="nav-item mb-2">
                 <a class="nav-link text-dim hover-accent d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#masterDataMenu" role="button" aria-expanded="{{ request()->is('admin/jabatan*') || request()->is('admin/lokasi-presensi*') || request()->is('admin/pegawai*') ? 'true' : 'false' }}" aria-controls="masterDataMenu">
@@ -102,26 +128,33 @@
                 <div class="collapse {{ request()->is('admin/presensi*') ? 'show' : '' }}" id="presensiMenu">
                     <ul class="nav flex-column ms-3 mt-1" style="font-size: 0.95rem; border-left: 2px solid var(--app-border);">
                         <li class="nav-item">
+                            <a class="nav-link py-2 ps-3 {{ request()->routeIs('admin.presensi.harian') || (request()->routeIs('admin.presensi.index') && request('mode') === 'harian') ? 'active-submenu' : 'text-dim hover-accent' }}" 
+                               href="{{ route('admin.presensi.harian') }}">
+                                Rekap Harian
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link py-2 ps-3 {{ request()->routeIs('admin.presensi.mingguan') || (request()->routeIs('admin.presensi.index') && request('mode') === 'mingguan') ? 'active-submenu' : 'text-dim hover-accent' }}" 
                                href="{{ route('admin.presensi.mingguan') }}">
-                               Rekap Mingguan
+                                Rekap Mingguan
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link py-2 ps-3 {{ request()->routeIs('admin.presensi.bulanan') || (request()->routeIs('admin.presensi.index') && request('mode', 'bulanan') === 'bulanan') ? 'active-submenu' : 'text-dim hover-accent' }}" 
                                href="{{ route('admin.presensi.bulanan') }}">
-                               Rekap Bulanan
+                                Rekap Bulanan
                             </a>
                         </li>
                     </ul>
                 </div>
             </li>
-            
-            <li class="nav-item mt-auto pt-3">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn-swiss-danger w-100 text-start">Logout</button>
-                </form>
+
+            <li class="nav-item mb-2 mt-2">
+                <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('admin.profile.*') ? 'active-submenu' : 'text-dim hover-accent' }}" 
+                   href="{{ route('admin.profile.index') }}">
+                    <i class="bi bi-person-gear text-primary"></i>
+                    <span>Pengaturan Profil</span>
+                </a>
             </li>
         </ul>
     </nav>
@@ -139,17 +172,43 @@
             </div>
 
             @if(Auth::check())
-            <div class="d-flex align-items-center gap-3 bg-white px-3 py-2 shadow-sm" style="border-radius: 50px; border: 1px solid var(--app-border);">
-                <div class="text-end d-none d-md-block">
-                    <div class="fw-bold" style="color: var(--app-text); font-size: 0.9rem;">{{ Auth::user()->pegawai->nama ?? Auth::user()->username }}</div>
-                    <div class="text-muted" style="font-size: 0.75rem;">Administrator</div>
-                </div>
-                <img src="{{ (Auth::user()->pegawai && Auth::user()->pegawai->foto) ? asset('storage/'.Auth::user()->pegawai->foto) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->pegawai->nama ?? Auth::user()->username).'&background=2563eb&color=fff' }}" 
-                     alt="Profile" 
-                     width="40"
-                     height="40"
-                     class="rounded-circle avatar-img-md" 
-                     style="width: 40px; height: 40px; min-width: 40px; object-fit: cover; border: 2px solid var(--app-border);">
+            <div class="dropdown">
+                <button class="btn bg-white border shadow-sm d-flex align-items-center gap-2 py-1 px-3 rounded-pill text-start" 
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: var(--app-border);">
+                    <div class="text-end d-none d-md-block lh-sm">
+                        <div class="fw-bold text-dark" style="font-size: 0.88rem;">{{ Auth::user()->pegawai->nama ?? Auth::user()->username }}</div>
+                        <small class="text-muted" style="font-size: 0.75rem;">Administrator</small>
+                    </div>
+                    <img src="{{ (Auth::user()->pegawai && Auth::user()->pegawai->foto) ? asset('storage/'.Auth::user()->pegawai->foto) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->pegawai->nama ?? Auth::user()->username).'&background=2563eb&color=fff' }}" 
+                         alt="Profile" 
+                         width="38"
+                         height="38"
+                         class="rounded-circle avatar-img-md" 
+                         style="width: 38px; height: 38px; min-width: 38px; object-fit: cover; border: 2px solid var(--app-border);">
+                    <i class="bi bi-chevron-down text-muted ms-1" style="font-size: 0.75rem;"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border mt-1" style="border-radius: 12px; min-width: 220px;">
+                    <li class="px-3 py-2 border-bottom bg-light">
+                        <div class="fw-bold small text-dark">{{ Auth::user()->pegawai->nama ?? Auth::user()->username }}</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">{{ '@' . Auth::user()->username }} &bull; Administrator</div>
+                    </li>
+                    <li>
+                        <a class="dropdown-item py-2 d-flex align-items-center gap-2 {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" href="{{ route('admin.profile.index') }}">
+                            <i class="bi bi-person-gear text-primary"></i>
+                            <span>Pengaturan Profil</span>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider my-1"></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item py-2 text-danger d-flex align-items-center gap-2">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Logout</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
             </div>
             @endif
         </div>

@@ -180,13 +180,13 @@
                             <div class="d-flex justify-content-center gap-1">
                                 <form action="{{ route('admin.ketidakhadiran.approve', $item) }}" method="POST" class="d-inline">
                                     @csrf @method('PATCH')
-                                    <button class="btn btn-sm btn-success px-2 py-1" style="font-size: 0.8rem;" onclick="return confirm('Setujui pengajuan ketidakhadiran ini?')">
+                                    <button type="button" class="btn btn-sm btn-success px-2 py-1" style="font-size: 0.8rem;" onclick="confirmAction(event, this, { title: 'Setujui Pengajuan?', text: 'Pengajuan ketidakhadiran atas nama {{ addslashes($item->pegawai->nama ?? 'Pegawai') }} akan disetujui.', icon: 'question', confirmText: 'Ya, Setujui', confirmColor: '#28a745' })">
                                         <i class="bi bi-check-lg me-1"></i> Approve
                                     </button>
                                 </form>
                                 <form action="{{ route('admin.ketidakhadiran.reject', $item) }}" method="POST" class="d-inline">
                                     @csrf @method('PATCH')
-                                    <button class="btn btn-sm btn-danger px-2 py-1" style="font-size: 0.8rem;" onclick="return confirm('Tolak pengajuan ketidakhadiran ini?')">
+                                    <button type="button" class="btn btn-sm btn-danger px-2 py-1" style="font-size: 0.8rem;" onclick="confirmAction(event, this, { title: 'Tolak Pengajuan?', text: 'Pengajuan ketidakhadiran atas nama {{ addslashes($item->pegawai->nama ?? 'Pegawai') }} akan ditolak.', icon: 'warning', confirmText: 'Ya, Tolak', confirmColor: '#d33' })">
                                         <i class="bi bi-x-lg me-1"></i> Reject
                                     </button>
                                 </form>

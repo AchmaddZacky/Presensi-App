@@ -27,6 +27,9 @@
     <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <!-- SweetAlert2 CDN (Guaranteed instant load & universal availability) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Critical CSS to eliminate Cumulative Layout Shift (CLS) -->
     <style>
         :root {
@@ -153,6 +156,115 @@
         }
         document.addEventListener('mouseover', handleInteraction, { passive: true });
         document.addEventListener('touchstart', handleInteraction, { passive: true });
+    })();
+    </script>
+
+    <!-- SweetAlert2 Global Confirmation Helpers -->
+    <script>
+    (function() {
+        window.confirmDelete = function(event, target, name = '') {
+            if (event) event.preventDefault();
+            const form = target && target.tagName === 'FORM' ? target : (target ? target.closest('form') : null);
+            if (!form) return false;
+
+            const text = name 
+                ? 'Data "' + name + '" yang dihapus tidak dapat dikembalikan!'
+                : 'Data yang dihapus tidak dapat dikembalikan!';
+
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: text,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            } else {
+                if (confirm(text)) {
+                    form.submit();
+                }
+            }
+            return false;
+        };
+
+        window.confirmAction = function(event, target, options = {}) {
+            if (event) event.preventDefault();
+            const form = target && target.tagName === 'FORM' ? target : (target ? target.closest('form') : null);
+            if (!form) return false;
+
+            const title = options.title || 'Apakah Anda yakin?';
+            const text = options.text || 'Lanjutkan tindakan ini?';
+            const icon = options.icon || 'question';
+            const confirmColor = options.confirmColor || '#3085d6';
+            const cancelColor = options.cancelColor || '#aaa';
+            const confirmText = options.confirmText || 'Ya, lanjutkan!';
+            const cancelText = options.cancelText || 'Batal';
+
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: title,
+                    text: text,
+                    icon: icon,
+                    showCancelButton: true,
+                    confirmButtonColor: confirmColor,
+                    cancelButtonColor: cancelColor,
+                    confirmButtonText: confirmText,
+                    cancelButtonText: cancelText
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            } else {
+                if (confirm(text)) {
+                    form.submit();
+                }
+            }
+            return false;
+        };
+
+        // Delegated click handler for elements with data-confirm
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('[data-confirm]');
+            if (!btn) return;
+            const form = btn.closest('form');
+            if (!form) return;
+            e.preventDefault();
+
+            const text = btn.getAttribute('data-confirm');
+            const title = btn.getAttribute('data-confirm-title') || 'Apakah Anda yakin?';
+            const icon = btn.getAttribute('data-confirm-icon') || 'warning';
+            const confirmText = btn.getAttribute('data-confirm-text') || 'Ya, lanjutkan!';
+            const confirmColor = btn.classList.contains('btn-danger') ? '#d33' : '#3085d6';
+
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: title,
+                    text: text,
+                    icon: icon,
+                    showCancelButton: true,
+                    confirmButtonColor: confirmColor,
+                    cancelButtonColor: '#aaa',
+                    confirmButtonText: confirmText,
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            } else {
+                if (confirm(text)) {
+                    form.submit();
+                }
+            }
+        });
     })();
     </script>
 </body>

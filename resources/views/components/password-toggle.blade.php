@@ -1,6 +1,6 @@
 <div class="input-group" style="position: relative;">
-    <input type="password" id="password" name="password" class="form-control-swiss" style="padding-right: 3rem;" required>
-    <button class="btn btn-swiss" type="button" id="togglePassword" style="position: absolute; right: 0; top: 0; height: 100%; border-left: none; padding: 0 1rem; box-shadow: none;">
+    <input type="password" id="password" name="password" class="form-control-swiss" style="padding-right: 2.5rem; font-size: 0.88rem; padding-top: 0.5rem; padding-bottom: 0.5rem;" required>
+    <button class="btn btn-swiss d-flex align-items-center justify-content-center" type="button" id="togglePassword" style="position: absolute; right: 0; top: 0; height: 100%; border-left: none; padding: 0 0.85rem; box-shadow: none; font-size: 0.88rem;">
         <i class="bi bi-eye" id="toggleIcon"></i>
     </button>
 </div>

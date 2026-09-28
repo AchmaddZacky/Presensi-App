@@ -25,7 +25,7 @@
                         <a href="{{ route('admin.pegawai.edit', $item) }}" class="btn btn-sm btn-warning">Edit</a>
                         <form action="{{ route('admin.pegawai.destroy', $item) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">Hapus</button>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(event, this, '{{ $item->nama }}')">Hapus</button>
                         </form>
                     </td>
                 </tr>

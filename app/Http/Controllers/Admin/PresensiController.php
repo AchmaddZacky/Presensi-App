@@ -18,10 +18,93 @@ class PresensiController extends Controller
 
     public function index(Request $request)
     {
+        if ($request->input('mode') === 'harian') {
+            return redirect()->route('admin.presensi.harian', $request->query());
+        }
         if ($request->input('mode') === 'bulanan') {
             return redirect()->route('admin.presensi.bulanan', $request->query());
         }
         return redirect()->route('admin.presensi.mingguan', $request->query());
+    }
+
+    public function harian(Request $request)
+    {
+        $idPegawai = $request->input('id_pegawai');
+        $idLokasi = $request->input('id_lokasi');
+        $search = $request->input('search');
+
+        if ($request->filled('date')) {
+            try {
+                $parsedDate = Carbon::parse($request->input('date'));
+                $tahun = $parsedDate->year;
+                $bulan = $parsedDate->month;
+                $tanggal = $parsedDate->day;
+            } catch (\Exception $e) {
+                $tahun = (int) now()->year;
+                $bulan = (int) now()->month;
+                $tanggal = (int) now()->day;
+            }
+        } else {
+            $tahun = (int) $request->input('tahun', now()->year);
+            $bulan = (int) $request->input('bulan', now()->month);
+            $tanggal = (int) $request->input('tanggal', now()->day);
+        }
+
+        if ($bulan < 1 || $bulan > 12) $bulan = (int) now()->month;
+        if ($tahun < 2000 || $tahun > 2100) $tahun = (int) now()->year;
+
+        $daysInMonth = Carbon::create($tahun, $bulan, 1)->daysInMonth;
+        if ($tanggal < 1 || $tanggal > $daysInMonth) {
+            $tanggal = min(max(1, $tanggal), $daysInMonth);
+        }
+
+        $selectedDateObj = Carbon::createFromDate($tahun, $bulan, $tanggal);
+        $selectedDate = $selectedDateObj->toDateString();
+
+        $presensi = $this->reportService->getRekap($idPegawai, $selectedDate, $selectedDate, $idLokasi, $search);
+        $pegawaiList = Pegawai::select('id', 'nama', 'nrg', 'lokasi_presensi_id')
+            ->when($idLokasi, fn ($q) => $q->where('lokasi_presensi_id', $idLokasi))
+            ->orderBy('nama')
+            ->get();
+        $lokasiList = LokasiPresensi::select('id', 'nama_lokasi')->orderBy('nama_lokasi')->get();
+
+        $namaBulan = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+        ];
+
+        // Navigasi cepat H-1, Hari Ini, H+1
+        $prevDate = $selectedDateObj->copy()->subDay();
+        $nextDate = $selectedDateObj->copy()->addDay();
+        $todayDate = now();
+
+        // Statistik ringkas harian
+        $totalHadir = $presensi->count();
+        $totalLengkap = $presensi->filter(fn($p) => !empty($p->jam_keluar))->count();
+        $totalBelumPulang = $presensi->filter(fn($p) => empty($p->jam_keluar))->count();
+
+        return view('admin.presensi.harian', compact(
+            'presensi',
+            'tanggal',
+            'bulan',
+            'tahun',
+            'daysInMonth',
+            'selectedDate',
+            'selectedDateObj',
+            'namaBulan',
+            'pegawaiList',
+            'lokasiList',
+            'idPegawai',
+            'idLokasi',
+            'search',
+            'prevDate',
+            'nextDate',
+            'todayDate',
+            'totalHadir',
+            'totalLengkap',
+            'totalBelumPulang'
+        ));
     }
 
     public function mingguan(Request $request)

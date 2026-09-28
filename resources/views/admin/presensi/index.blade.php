@@ -271,8 +271,6 @@
                             </div>
                             @if($item->foto_masuk)
                                 <button type="button" class="btn btn-sm btn-outline-primary border-0 p-1 ms-auto" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#photoModal" 
                                         onclick="showPhoto('{{ asset('storage/'.$item->foto_masuk) }}', 'Foto Masuk - {{ $item->pegawai->nama ?? '' }} ({{ $item->jam_masuk }})')"
                                         title="Lihat Foto Masuk">
                                     <img src="{{ asset('storage/'.$item->foto_masuk) }}" 
@@ -311,8 +309,6 @@
                             </div>
                             @if($item->foto_keluar)
                                 <button type="button" class="btn btn-sm btn-outline-warning border-0 p-1 ms-auto" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#photoModal" 
                                         onclick="showPhoto('{{ asset('storage/'.$item->foto_keluar) }}', 'Foto Pulang - {{ $item->pegawai->nama ?? '' }} ({{ $item->jam_keluar }})')"
                                         title="Lihat Foto Pulang">
                                     <img src="{{ asset('storage/'.$item->foto_keluar) }}" 
@@ -357,25 +353,20 @@
     </div>
 </div>
 
-<!-- Photo Preview Modal -->
-<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow" style="border-radius: 16px;">
-            <div class="modal-header border-0 pb-0">
-                <h6 class="modal-title fw-bold" id="photoModalLabel">Preview Foto Presensi</h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center p-4">
-                <img id="modalPhotoImage" src="" alt="Foto Presensi" loading="lazy" decoding="async" class="img-fluid rounded shadow-sm" style="max-height: 420px; object-fit: contain; width: 100%;">
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
-    function showPhoto(imageUrl, caption) {
-        document.getElementById('modalPhotoImage').src = imageUrl;
-        document.getElementById('photoModalLabel').innerText = caption;
+    function showPhoto(url, title) {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: title,
+                imageUrl: url,
+                imageAlt: title,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Tutup',
+                footer: '<a href="' + url + '" target="_blank">Buka gambar di tab baru</a>'
+            });
+        } else {
+            window.open(url, '_blank');
+        }
     }
 </script>
 @endsection

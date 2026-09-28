@@ -26,7 +26,7 @@
                         <a href="{{ route('admin.lokasi-presensi.edit', $item) }}" class="btn btn-sm btn-warning">Edit</a>
                         <form action="{{ route('admin.lokasi-presensi.destroy', $item) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">Hapus</button>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(event, this, '{{ $item->nama_lokasi }}')">Hapus</button>
                         </form>
                     </td>
                 </tr>

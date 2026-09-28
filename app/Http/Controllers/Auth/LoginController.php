@@ -10,6 +10,12 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return Auth::user()->isAdmin()
+                ? redirect()->route('admin.dashboard')
+                : redirect()->route('pegawai.dashboard');
+        }
+
         return view('auth.login');
     }
 
@@ -22,6 +28,7 @@ class LoginController extends Controller
 
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()
+                ->with('error', 'Username atau password salah. Silakan coba lagi.')
                 ->withErrors(['username' => 'Username atau password salah.'])
                 ->onlyInput('username');
         }
@@ -29,10 +36,11 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $user = Auth::user();
+        $nama = $user->pegawai->nama ?? $user->username;
 
         return $user->isAdmin()
-            ? redirect()->intended(route('admin.dashboard'))
-            : redirect()->intended(route('pegawai.dashboard'));
+            ? redirect()->intended(route('admin.dashboard'))->with('success', "Selamat datang kembali, {$nama}! Anda berhasil login.")
+            : redirect()->intended(route('pegawai.dashboard'))->with('success', "Selamat datang kembali, {$nama}! Anda berhasil login.");
     }
 
     public function logout(Request $request)
@@ -41,6 +49,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Anda telah berhasil logout dari sistem.');
     }
 }

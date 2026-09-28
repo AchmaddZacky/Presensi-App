@@ -165,7 +165,11 @@ h1, h2, h3, h4, h5, h6 {
     min-width: 280px !important;
     background: var(--app-surface);
     border-right: 1px solid var(--app-border);
-    min-height: 100vh;
+    height: 100vh !important;
+    position: sticky !important;
+    top: 0 !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin;
   }
 }
 
