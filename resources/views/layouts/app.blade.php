@@ -267,5 +267,19 @@
         });
     })();
     </script>
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('{{ asset('sw.js') }}')
+                    .then(function (reg) {
+                        console.log('[PWA] ServiceWorker registered with scope:', reg.scope);
+                    })
+                    .catch(function (err) {
+                        console.warn('[PWA] ServiceWorker registration failed:', err);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
