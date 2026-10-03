@@ -11,7 +11,7 @@ const PRECACHE_ASSETS = [
     '/apple-touch-icon.png',
     '/android-chrome-192x192.png',
     '/android-chrome-512x512.png',
-    '/images/logo-pt-baben.png',
+    '/images/logo.png',
     'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap',
     'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
     'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
