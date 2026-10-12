@@ -1,12 +1,12 @@
 # 📱 Presensi App - Sistem Presensi Online & Manajemen Pegawai
 
-[![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![Laravel](https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
 [![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-**Presensi App** adalah sistem informasi presensi pegawai berbasis web modern yang dibangun menggunakan **Laravel 11**, **Bootstrap 5**, dan arsitektur **Progressive Web App (PWA)**. Aplikasi ini dirancang untuk mendigitalisasi proses absensi kehadiran karyawan secara akurat, aman, dan efisien menggunakan validasi swafoto (webcam selfie), koordinat GPS (*Geofencing radius*), pengajuan izin/sakit/cuti, serta rekapitulasi laporan otomatis ke format PDF dan CSV.
+**Presensi App** adalah sistem informasi presensi pegawai berbasis web modern yang dibangun menggunakan **Laravel 13**, **Bootstrap 5**, dan arsitektur **Progressive Web App (PWA)**. Aplikasi ini dirancang untuk mendigitalisasi proses absensi kehadiran karyawan secara akurat, aman, dan efisien menggunakan validasi swafoto (webcam selfie), koordinat GPS (*Geofencing radius*), pengajuan izin/sakit/cuti, serta rekapitulasi laporan otomatis ke format PDF dan CSV.
 
 ---
 
@@ -115,8 +115,8 @@
 
 | Kategori | Teknologi / Pustaka |
 | :--- | :--- |
-| **Backend Framework** | [Laravel 11.x](https://laravel.com) |
-| **Bahasa Pemrograman** | PHP 8.2 / 8.3 / 8.4 |
+| **Backend Framework** | [Laravel 13.x](https://laravel.com) (v13.31.0) |
+| **Bahasa Pemrograman** | PHP 8.3 / 8.4 |
 | **Basis Data** | MySQL / MariaDB |
 | **Styling & CSS** | [Bootstrap 5.3](https://getbootstrap.com) & Vanilla CSS Tokens |
 | **Ikon Antarmuka** | [Bootstrap Icons v1.11](https://icons.getbootstrap.com/) |
@@ -166,7 +166,7 @@ Presensi-App/
 │       ├── Presensi.php                    # Model tabel presensi (clock in/out, foto, koordinat)
 │       └── User.php                        # Model autentikasi (role: admin/pegawai)
 ├── bootstrap/
-│   └── app.php                             # Inisialisasi aplikasi & pendaftaran middleware (Laravel 11)
+│   └── app.php                             # Inisialisasi aplikasi & pendaftaran middleware (Laravel 13)
 ├── config/                                 # Seluruh berkas konfigurasi sistem
 ├── database/
 │   ├── migrations/                         # Skema pembentukan tabel & indeks performa
@@ -305,7 +305,7 @@ erDiagram
 
 ### Prasyarat Sistem
 Pastikan perangkat Anda telah terpasang:
-- **PHP** versi 8.2 atau lebih baru (dengan ekstensi `pdo_mysql`, `mbstring`, `openssl`, `curl`, `gd`, `fileinfo`)
+- **PHP** versi 8.3 atau lebih baru (dengan ekstensi `pdo_mysql`, `mbstring`, `openssl`, `curl`, `gd`, `fileinfo`)
 - **Composer** versi 2.x
 - **Node.js** (v18.x atau v20.x LTS) & **NPM**
 - **MySQL / MariaDB**
