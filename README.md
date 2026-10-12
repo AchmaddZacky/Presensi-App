@@ -4,6 +4,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
 [![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
+[![Author](https://img.shields.io/badge/Author-AchmaddZacky-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AchmaddZacky)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 **Presensi App** adalah sistem informasi presensi pegawai berbasis web modern yang dibangun menggunakan **Laravel 13**, **Bootstrap 5**, dan arsitektur **Progressive Web App (PWA)**. Aplikasi ini dirancang untuk mendigitalisasi proses absensi kehadiran karyawan secara akurat, aman, dan efisien menggunakan validasi swafoto (webcam selfie), koordinat GPS (*Geofencing radius*), pengajuan izin/sakit/cuti, serta rekapitulasi laporan otomatis ke format PDF dan CSV.
@@ -461,5 +462,5 @@ Proyek ini dirilis di bawah lisensi terbuka [MIT License](LICENSE). Anda dipersi
 ---
 
 <p align="center">
-  Dibuat dengan ❤️ untuk kemudahan dan transparansi presensi kerja modern.
+  Dibuat dengan ❤️ oleh <a href="https://github.com/AchmaddZacky"><strong>@AchmaddZacky</strong></a> untuk kemudahan dan transparansi presensi kerja modern.
 </p>
