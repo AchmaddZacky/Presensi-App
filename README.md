@@ -462,5 +462,5 @@ Proyek ini dirilis di bawah lisensi terbuka [MIT License](LICENSE). Anda dipersi
 ---
 
 <p align="center">
-  Dibuat dengan ❤️ oleh <a href="https://github.com/AchmaddZacky"><strong>@AchmaddZacky</strong></a> untuk kemudahan dan transparansi presensi kerja modern.
+  Dibuat oleh <a href="https://github.com/AchmaddZacky"><strong>@AchmaddZacky</strong></a>
 </p>
